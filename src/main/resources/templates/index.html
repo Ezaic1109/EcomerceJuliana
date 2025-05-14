@@ -1,11 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Mi Tienda</title>
+  <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-    
+  <header>
+    <h1>Mi Tienda</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Productos</a></li>|
+        <li><a href="#">Contacto</a></li>
+      </ul>
+      <div id="carrito-icono">
+        🛒 (<span id="contador">0</span>)
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Productos</h2>
+    <div class="producto">
+      <h3>Producto 1</h3>
+      <p>$10</p>
+      <button onclick="agregarAlCarrito('Producto 1')">Agregar al carrito</button>
+    </div>
+    <div class="producto">
+      <h3>Producto 2</h3>
+      <p>$20</p>
+      <button onclick="agregarAlCarrito('Producto 2')">Agregar al carrito</button>
+    </div>
+  </main>
+
+  <script src="../static/js/carrito.js"></script>
 </body>
 </html>
