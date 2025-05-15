@@ -36,3 +36,93 @@ nav a {
   padding: 1em;
   margin: 1em;
 }
+    .navbar-pink {
+      background-color: #FF69B4;
+    }
+    .navbar-pink .nav-link,
+    .navbar-pink .navbar-brand,
+    .navbar-pink .navbar-text {
+      color: white;
+    }
+    .navbar-pink .nav-link:hover {
+      color: #ffe4f0; /* un tono más claro al pasar el mouse */
+    }
+ 
+.contenedor-tienda {
+  display: flex;
+  gap: 2rem;
+}
+
+.filtro-lateral {
+  width: 250px;
+  border-right: 1px solid #ccc;
+  padding-right: 1rem;
+}
+
+.filtro-section {
+  margin-bottom: 2rem;
+}
+
+.filtro-section h3 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  color: #444;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.filtro-section label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.grid-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.producto-card {
+  border: 2px solid #e04f8b; /* Borde rosa fuerte */
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  width: 200px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.producto-card:hover {
+  transform: scale(1.03);
+}
+
+.producto-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.producto-card p {
+  font-size: 1rem;
+  color: #111;
+  margin-bottom: 1rem;
+}
+
+.producto-card button {
+  background: linear-gradient(to right, #e04f8b, #f58ea4);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.producto-card button:hover {
+  background: linear-gradient(to right, #c44177, #e97c96);
+}
