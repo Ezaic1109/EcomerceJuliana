@@ -10,11 +10,11 @@ import com.juliana.ecommerce.service.ProductoService;
 @Controller
 public class VistaController {
        @Autowired
-       ProductoService productoService;
+    private ProductoService productoService;
 
-        @GetMapping({"/", "/index", "/index.html"})
+    @GetMapping({"/", "/index", "/home", "/index.html"})
     public String mostrarIndex(Model model) {
-        model.addAttribute("productos", productoService.obtenerTodosLosProductos());
+        model.addAttribute("productos", productoService.findAll());
         return "index";  // Nombre del archivo Thymeleaf sin extensión .html
     }
 }

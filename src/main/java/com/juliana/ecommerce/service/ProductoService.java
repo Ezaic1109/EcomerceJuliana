@@ -2,19 +2,23 @@ package com.juliana.ecommerce.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.juliana.ecommerce.model.Producto;
-import com.juliana.ecommerce.repository.ProductoRepository;
+import java.util.Optional;
 
-@Service
-public class ProductoService {
-        @Autowired
-    private ProductoRepository productoRepository;
+public interface ProductoService {
+    
+    
 
-    public List<Producto> obtenerTodosLosProductos() {
-        return productoRepository.findAll(); // Aquí se extraen de la base
-    }
+    List<Producto> findAll(); // Aquí se extraen de la base
+    
+    
+    Optional<Producto> findById(Long id); //aqui se extraen los datos por identificador
+    
+
+   List<Producto>findByNombre(String nom); //aqui se extraen los datos por nombre
+
+
+
+
 }
  

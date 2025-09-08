@@ -1,32 +1,22 @@
-let carrito = [];
+let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
 function agregarAlCarrito(producto) {
-  carrito.push(producto);
-  document.getElementById("contador").textContent = carrito.length;
-  console.log("Carrito:", carrito);
+    carrito.push(producto);
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    document.getElementById("contador").textContent = carrito.length;
 }
 
-fetch("http://localhost:8080/api/producto")
-  .then(res => res.json())
-  .then(productos => {
-    const grid = document.querySelector(".grid-productos");
-
-    productos.forEach(p => {
-      const card = document.createElement("article");
-      card.classList.add("producto-card");
-
-      card.innerHTML = `
-        <h3>${p.nombre}</h3>
-        <p>$${p.precio}</p>
-        <button onclick="agregarAlCarrito('${p.nombre}')">Agregar al carrito</button>
-        <button onclick="verDetalle('${p.nombre}')">Ver más</button>
-      `;
-
-      grid.appendChild(card);
-    });
-  });
-
-function verDetalle(variante) {
-  // Redirige al HTML de producto con el parámetro "variante"
-  window.location.href = `../../templates/index.html?variante=${encodeURIComponent(variante)}`;
+function cargarCarrito() {
+    document.getElementById("contador").textContent = carrito.length;
+    const lista = document.getElementById("listaCarrito");
+    if (lista) {
+        carrito.forEach(p => {
+            const li = document.createElement('li');
+            li.textContent = p;
+            li.className = 'list-group-item';
+            lista.appendChild(li);
+        });
+    }
 }
+
+cargarCarrito();
