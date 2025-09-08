@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Cuenta</title>
+  <style>
+    body.form-page {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #fff8fb, #ffeef5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #333;
+    }
+    .card-form {
+      background: #fff;
+      padding: 2rem 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card-form:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.18); }
+    .card-form h2 { color: #e04f8b; margin-bottom: 1.5rem; }
+    .card-form input[type="email"], .card-form input[type="password"], .card-form input[type="text"] {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      border: 2px solid #f8c3d4;
+      outline: none;
+      font-size: 1rem;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    .card-form input:focus { border-color: #e04f8b; box-shadow: 0 0 8px rgba(224,79,139,0.3); }
+    .card-form .btn-primary {
+      width: 100%;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(to right, #e04f8b, #f58ea4);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .card-form .btn-primary:hover { background: linear-gradient(to right, #c44177, #e97c96); transform: translateY(-2px); }
+    .card-form .alert { padding: 0.75rem 1rem; border-radius: 12px; margin-bottom: 1rem; font-size: 0.95rem; }
+    .card-form .alert-danger { background: #ffe0eb; color: #c44177; }
+    .card-form .alert-success { background: #ffd9e6; color: #e04f8b; }
+    .card-form a { color: #e04f8b; text-decoration: none; font-weight: 500; }
+    .card-form a:hover { text-decoration: underline; }
+    .pw-toggle { cursor:pointer; user-select:none; font-size:0.9rem; background:none; border:none; color:#e04f8b; margin-left:0.5rem; }
+    .form-check-input { accent-color: #e04f8b; margin-right: 0.5rem; }
+  </style>
+</head>
+<body class="form-page">
+  <div class="card-form">
+    <h2>Crear Cuenta</h2>
+
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+    <form th:action="@{/registro}" method="post" novalidate>
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+      <input type="text" name="username" placeholder="Nombre de usuario" required />
+      <input type="email" name="email" placeholder="Correo electrónico" required />
+
+      <div style="display:flex; align-items:center; margin-bottom:1rem;">
+        <input id="password" name="password" type="password" placeholder="Contraseña" required style="flex:1;" />
+        <button class="pw-toggle" type="button" data-target="password">Mostrar</button>
+      </div>
+      <div style="display:flex; align-items:center; margin-bottom:1rem;">
+        <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirmar contraseña" required style="flex:1;" />
+        <button class="pw-toggle" type="button" data-target="confirmPassword">Mostrar</button>
+      </div>
+
+      <div class="form-check" style="margin-bottom:1rem; text-align:left;">
+        <input class="form-check-input" type="checkbox" id="tyc" required>
+        <label class="form-check-label" for="tyc">Acepto los términos y condiciones</label>
+      </div>
+
+      <button class="btn-primary" type="submit">Crear cuenta</button>
+
+      <p style="margin-top:1rem;">¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión</a></p>
+    </form>
+  </div>
+
+  <script>
+    document.querySelectorAll('.pw-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-target');
+        const input = document.getElementById(id);
+        input.type = input.type === 'password' ? 'text' : 'password';
+        btn.textContent = btn.textContent === 'Mostrar' ? 'Ocultar' : 'Mostrar';
+      });
+    });
+
+    document.querySelector('form').addEventListener('submit', (e) => {
+      const p1 = document.getElementById('password').value;
+      const p2 = document.getElementById('confirmPassword').value;
+      if(p1!==p2){ e.preventDefault(); alert('Las contraseñas no coinciden.'); }
+    });
+  </script>
+</body>
+</html>

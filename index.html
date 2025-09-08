@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuliana - Tienda de Tuppers</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+</head>
+<body>
+
+<!-- Navbar -->
+<header role="banner">
+    <nav class="navbar navbar-expand-lg navbar-pink" aria-label="Main navigation">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">
+                <img th:src="@{/img/logo.png}" alt="Logo Yuliana" style="height: 80px;">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegación">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0" role="menubar">
+                    <li class="nav-item"><a class="nav-link text-white" th:href="@{/}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#">Catálogo Digital</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#">Tiendas</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#">Contacto</a></li>
+                </ul>
+
+                <div class="d-flex align-items-center">
+                    <span class="navbar-text text-white fs-5 me-3" aria-label="Carrito de compras">
+                        🛒 (<span id="contador" th:text="${carrito != null} ? ${carrito.size()} : 0">0</span>)
+                    </span>
+
+                    <!-- Usuario logueado -->
+                    <span th:if="${#authentication != null}" class="text-white fs-5 me-2">
+                        <i class="bi bi-person-circle"></i>
+                        <span th:text="${#authentication.name}">Usuario</span>
+                        <a th:href="@{/logout}" class="text-white ms-2">Cerrar sesión</a>
+                    </span>
+
+                    <!-- Usuario no logueado -->
+                    <span th:if="${#authentication == null}">
+                        <a class="btn btn-outline-light" th:href="@{/login}">Iniciar sesión</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Contenido principal -->
+<main role="main" class="container py-4">
+    <div class="contenedor-tienda d-flex">
+
+        <!-- Sidebar de filtros -->
+        <aside class="filtro-lateral me-4" role="complementary" aria-label="Filtros de productos">
+            <section class="filtro-section">
+                <h3>PRODUCTO</h3>
+                <label><input type="checkbox"> Tuppers</label>
+                <label><input type="checkbox"> Vasos</label>
+                <label><input type="checkbox"> Termos</label>
+                <label><input type="checkbox"> Accesorios</label>
+            </section>
+
+            <section class="filtro-section">
+                <h3>CATEGORÍA</h3>
+                <label><input type="checkbox"> Cocina</label>
+                <label><input type="checkbox"> Hogar</label>
+                <label><input type="checkbox"> Oficina</label>
+            </section>
+
+            <section class="filtro-section">
+                <h3>RANGO DE PRECIO</h3>
+                <input type="range" min="0" max="500" value="250" id="rangoPrecio">
+                <p>Hasta: $<span id="valorPrecio">250</span></p>
+            </section>
+        </aside>
+
+        <!-- Grid de productos -->
+        <section class="grid-productos" role="region" aria-label="Productos disponibles">
+            <article class="producto-card" th:each="producto : ${productos}">
+                <img th:src="@{/img/tupper.png}" alt="Imagen producto" style="max-height:120px; margin-bottom:10px;">
+                <h3 th:text="${producto.nombre}">Nombre del producto</h3>
+                <p th:text="'$' + ${producto.precio}">Precio</p>
+                <button th:attr="onclick=|agregarAlCarrito('${producto.nombre}')|">Agregar al carrito</button>
+                <button th:attr="onclick=|verDetalle('${producto.nombre}')|">Ver más</button>
+            </article>
+        </section>
+
+    </div>
+
+    <!-- Pedidos recientes -->
+    <div class="pedidos-recientes mt-5" th:if="${#authentication != null}">
+        <h3>Pedidos recientes</h3>
+        <ul class="list-group">
+            <li class="list-group-item" th:each="pedido : ${pedidos}">
+                Pedido #<span th:text="${pedido.id}"></span> -
+                Total: $<span th:text="${pedido.total}"></span> -
+                Fecha: <span th:text="${pedido.fecha}"></span>
+            </li>
+        </ul>
+    </div>
+</main>
+
+<script th:src="@{/js/carrito.js}"></script>
+<script>
+    const rango = document.getElementById("rangoPrecio");
+    const valor = document.getElementById("valorPrecio");
+    rango.addEventListener("input", () => valor.textContent = rango.value);
+</script>
+</body>
+</html>
